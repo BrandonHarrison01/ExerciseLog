@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native'
 
-function Login() {
+function Login(props) {
     return(
         <View>
-            <TouchableOpacity style={styles.emailButton} onPress={() => Alert.alert('pressed')}>
+            <TouchableOpacity style={styles.emailButton} onPress={() => props.navigation.navigate('RoutineFeed')}>
                 <Text>Email</Text>
             </TouchableOpacity>
         </View>

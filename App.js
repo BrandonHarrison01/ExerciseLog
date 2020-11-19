@@ -1,3 +1,5 @@
+// ./gradlew clean
+
 import 'react-native-gesture-handler'
 import React from 'react';
   import {
@@ -10,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Login from './components/auth/Login'
+import RoutineFeed from './components/RoutineFeed'
 
 const Stack = createStackNavigator()
 
@@ -20,6 +23,10 @@ const App = () => {
         <Stack.Screen 
           name='Login'
           component={Login}
+        />
+        <Stack.Screen 
+          name='RoutineFeed'
+          component={RoutineFeed}
         />
       </Stack.Navigator>
     </NavigationContainer>
