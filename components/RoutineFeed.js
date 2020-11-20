@@ -10,15 +10,17 @@ import firestore from '@react-native-firebase/firestore'
 function RoutineFeed() {
 
     useEffect(() => {
-        const a = async () => {
-            const users = await firestore()
-                .collection('users1')
-                .get()
-    
-            console.log(users, 'users')
-        }
-    
-        a()
+        firestore()
+            .collection('users1')
+            .doc('initial')
+            .collection('created-routines')
+            // .doc('bench-day')
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach(doc => {
+                    console.log(doc.data(), 'data')
+                })
+            })
     }, [])
     
     return(
