@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, AsyncStorage} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
-function RoutineFeed() {
+function RoutineFeed(props) {
   const [routines, setRoutines] = useState(null);
 
   useEffect(() => {
@@ -21,21 +21,25 @@ function RoutineFeed() {
       });
   }, []);
 
-  const mapRoutines = () => {
-    return(
-        routines.map(routine => {
-            <TouchableOpacity>
-                <Text>test</Text>
-            </TouchableOpacity>
-        })
-    )
+  const selectRoutine = async (routine) => {
+    console.log(routine.document, 'routine')
+    await AsyncStorage.setItem('document', `${routine.document}`)
+    props.navigation.navigate("Routine")
   }
+
+  const list = () => {
+    return routines.map((element) => {
+      return (
+        <TouchableOpacity style={{ margin: 10 }} onPress={() => selectRoutine(element)}>
+          <Text>{element.title}</Text>
+        </TouchableOpacity>
+      );
+    });
+  };
 
   return (
     <View>
-        {
-            routines ? mapRoutines() : <Text>Waiting...</Text>
-        }
+      {routines && list()}
     </View>
   );
 }

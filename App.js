@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Login from './components/auth/Login'
 import RoutineFeed from './components/RoutineFeed'
+import Routine from './components/Routine';
 
 const Stack = createStackNavigator()
 
@@ -27,6 +28,10 @@ const App = () => {
         <Stack.Screen 
           name='RoutineFeed'
           component={RoutineFeed}
+        />
+        <Stack.Screen 
+          name='Routine'
+          component={Routine}
         />
       </Stack.Navigator>
     </NavigationContainer>
