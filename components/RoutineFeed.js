@@ -1,11 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, AsyncStorage, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  AsyncStorage,
+  TextInput,
+} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
 function RoutineFeed(props) {
   const [routines, setRoutines] = useState(null);
-  const [date, setDate] = useState()
+  const [date, setDate] = useState();
 
   useEffect(() => {
     firestore()
@@ -20,8 +27,6 @@ function RoutineFeed(props) {
         });
         setRoutines(r);
       });
-    // const date = new Date().getHours()
-    // console.log(date, 'is the time')
   }, []);
 
   useEffect(() => {
@@ -33,7 +38,7 @@ function RoutineFeed(props) {
       4: 'Thursday',
       5: 'Friday',
       6: 'Saturday',
-    }
+    };
     const months = {
       0: 'January',
       1: 'February',
@@ -46,47 +51,51 @@ function RoutineFeed(props) {
       8: 'September',
       9: 'October',
       10: 'November',
-      11: 'December'
-    }
+      11: 'December',
+    };
     const getDate = {
       day: weekdays[new Date().getDay()],
       month: months[new Date().getMonth()],
       date: new Date().getDate(),
-      year: new Date().getFullYear()
-    }
+      year: new Date().getFullYear(),
+    };
 
-    setDate(getDate)
-  }, [])
+    setDate(getDate);
+  }, []);
 
   const selectRoutine = async (routine) => {
-    console.log(routine.document, 'routine')
-    await AsyncStorage.setItem('document', `${routine.document}`)
-    props.navigation.navigate("Routine")
-  }
+    console.log(routine.document, 'routine');
+    await AsyncStorage.setItem('document', `${routine.document}`);
+    props.navigation.navigate('Routine');
+  };
 
   const list = () => {
     return routines.map((element) => {
       return (
-        <TouchableOpacity style={{ margin: 10 }} onPress={() => selectRoutine(element)}>
+        <TouchableOpacity
+          style={{margin: 20}}
+          onPress={() => selectRoutine(element)}>
           <Text>{element.title}</Text>
         </TouchableOpacity>
       );
     });
   };
 
-  console.log(date, 'date')
+  console.log(date, 'date');
 
   return (
     <View>
-      {
-        date &&
+      {date && (
         <View>
           <Text>{date.day}</Text>
           <Text>{`${date.month} ${date.date}, ${date.year}`}</Text>
         </View>
-      }
-      <TextInput placeholder='Search...' />
+      )}
+      <TextInput placeholder="Search..." />
       {routines && list()}
+      <TouchableOpacity style={{margin: 20}} onPress={() => props.navigation.navigate('ExerciseList')}>
+        <Text>see exercises</Text>
+      </TouchableOpacity>
     </View>
   );
 }
