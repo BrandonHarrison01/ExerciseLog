@@ -15,15 +15,15 @@ function Routine(props) {
               .collection('created-routines')
               .doc(document)
               .get()
-              setRoutine(routine.data())
+            setRoutine(routine.data())
         };
         fetchData()
     },[]);
 
     return(
-        <View>
+        <TouchableOpacity>
             {routine && <Text>{routine.document}</Text>}
-        </View>
+        </TouchableOpacity>
     )
 }
 
