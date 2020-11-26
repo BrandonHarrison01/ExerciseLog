@@ -69,18 +69,6 @@ function RoutineFeed(props) {
     props.navigation.navigate('Routine');
   };
 
-  const list = () => {
-    return routines.map((element) => {
-      return (
-        <TouchableOpacity
-          style={{margin: 20}}
-          onPress={() => selectRoutine(element)}>
-          <Text>{element.title}</Text>
-        </TouchableOpacity>
-      );
-    });
-  };
-
   console.log(date, 'date');
 
   return (
@@ -92,7 +80,13 @@ function RoutineFeed(props) {
         </View>
       )}
       <TextInput placeholder="Search..." />
-      {routines && list()}
+      {routines && routines.map((element) => (
+        <TouchableOpacity
+          style={{margin: 20}}
+          onPress={() => selectRoutine(element)}>
+          <Text>{element.title}</Text>
+        </TouchableOpacity>
+      ))}
       <TouchableOpacity style={{margin: 20}} onPress={() => props.navigation.navigate('ExerciseList')}>
         <Text>see exercises</Text>
       </TouchableOpacity>

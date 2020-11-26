@@ -21,22 +21,16 @@ function ExerciseList() {
       });
   }, []);
 
-  const list = () => {
-    return exercises.map((element) => {
-      return (
+  return (
+    <View>
+        <Text>exercises ↓</Text>
+      {exercises && exercises.map((element) => (
         <TouchableOpacity
           style={{margin: 20}}
           onPress={() => selectRoutine(element)}>
           <Text>{element.title}</Text>
         </TouchableOpacity>
-      );
-    });
-  };
-
-  return (
-    <View>
-        <Text>exercises ↓</Text>
-      {exercises && list()}
+      ))}
     </View>
   );
 }
