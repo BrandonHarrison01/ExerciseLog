@@ -27,7 +27,8 @@ function ExerciseList() {
       {exercises && exercises.map((element) => (
         <TouchableOpacity
           style={{margin: 20}}
-          onPress={() => selectRoutine(element)}>
+          // onPress={() => selectRoutine(element)}
+        >
           <Text>{element.title}</Text>
         </TouchableOpacity>
       ))}

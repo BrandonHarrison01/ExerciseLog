@@ -8,6 +8,8 @@ import {
   TextInput,
 } from 'react-native';
 
+import { weekdays, months } from '../dates'
+
 import firestore from '@react-native-firebase/firestore';
 
 function RoutineFeed(props) {
@@ -30,29 +32,6 @@ function RoutineFeed(props) {
   }, []);
 
   useEffect(() => {
-    const weekdays = {
-      0: 'Sunday',
-      1: 'Monday',
-      2: 'Tuesday',
-      3: 'Wednesday',
-      4: 'Thursday',
-      5: 'Friday',
-      6: 'Saturday',
-    };
-    const months = {
-      0: 'January',
-      1: 'February',
-      2: 'March',
-      3: 'April',
-      4: 'May',
-      5: 'June',
-      6: 'July',
-      7: 'August',
-      8: 'September',
-      9: 'October',
-      10: 'November',
-      11: 'December',
-    };
     const getDate = {
       day: weekdays[new Date().getDay()],
       month: months[new Date().getMonth()],
@@ -69,8 +48,6 @@ function RoutineFeed(props) {
     props.navigation.navigate('Routine');
   };
 
-  console.log(date, 'date');
-
   return (
     <View>
       {date && (
@@ -85,6 +62,9 @@ function RoutineFeed(props) {
           style={{margin: 20}}
           onPress={() => selectRoutine(element)}>
           <Text>{element.title}</Text>
+          {element.exercises.map(exercise => (
+            <Text>{`${exercise.title} ${exercise.sets} of ${exercise.reps} at ${exercise.weight} lbs`}</Text>
+          ))}
         </TouchableOpacity>
       ))}
       <TouchableOpacity style={{margin: 20}} onPress={() => props.navigation.navigate('ExerciseList')}>
