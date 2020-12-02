@@ -59,11 +59,11 @@ function RoutineFeed(props) {
       <TextInput placeholder="Search..." />
       {routines && routines.map((element) => (
         <TouchableOpacity
-          style={{margin: 20}}
+          style={styles.routine}
           onPress={() => selectRoutine(element)}>
           <Text>{element.title}</Text>
           {element.exercises.map(exercise => (
-            <Text>{`${exercise.title} ${exercise.sets} of ${exercise.reps} at ${exercise.weight} lbs`}</Text>
+            <Text>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
           ))}
         </TouchableOpacity>
       ))}
@@ -73,5 +73,15 @@ function RoutineFeed(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  routine: {
+    padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5
+  }
+})
 
 export default RoutineFeed;
