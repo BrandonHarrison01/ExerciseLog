@@ -67,8 +67,11 @@ function RoutineFeed(props) {
           ))}
         </TouchableOpacity>
       ))}
-      <TouchableOpacity style={{margin: 20}} onPress={() => props.navigation.navigate('ExerciseList')}>
-        <Text>see exercises</Text>
+      <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('ExerciseList')}>
+        <Text>SEE EXERCISES</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('NewRoutine')}>
+        <Text>ADD NEW ROUTINE</Text>
       </TouchableOpacity>
     </View>
   );
@@ -80,6 +83,13 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: 'gray',
+    borderRadius: 5
+  },
+  navButton: {
+    padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: 'blue',
     borderRadius: 5
   }
 })

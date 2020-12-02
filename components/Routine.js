@@ -64,6 +64,6 @@ const styles = StyleSheet.create({
       borderColor: 'gray',
       borderRadius: 5
     }
-  })
+})
 
 export default Routine
