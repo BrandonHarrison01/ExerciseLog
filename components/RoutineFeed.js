@@ -59,11 +59,12 @@ function RoutineFeed(props) {
       <TextInput placeholder="Search..." />
       {routines && routines.map((element) => (
         <TouchableOpacity
+          key={element.document}
           style={styles.routine}
           onPress={() => selectRoutine(element)}>
           <Text>{element.title}</Text>
           {element.exercises.map(exercise => (
-            <Text>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
+            <Text id={exercise.id}>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
           ))}
         </TouchableOpacity>
       ))}

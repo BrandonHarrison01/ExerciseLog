@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -23,9 +23,10 @@ function ExerciseList() {
 
   return (
     <View>
-        <Text>exercises ↓</Text>
+        <TextInput placeholder="Search" />
       {exercises && exercises.map((element) => (
         <TouchableOpacity
+          id={element.id}
           style={{margin: 20}}
           // onPress={() => selectRoutine(element)}
         >
