@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, TextInput} from 'react-native';
+import {View, Text, TouchableOpacity, TextInput, ActivityIndicator} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
 function ExerciseList() {
-  const [exercises, setExercises] = useState(null)
+  const [exercises, setExercises] = useState(null);
+  const [searchResults, setSearchResults] = useState(null)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     firestore()
@@ -21,18 +23,42 @@ function ExerciseList() {
       });
   }, []);
 
-  return (
-    <View>
-        <TextInput placeholder="Search" />
-      {exercises && exercises.map((element) => (
+  useEffect(() => {
+    if(search){
+      let results = []
+      exercises.map(exercise => {
+        if(exercise.title.includes(search)){
+          results.push(exercise)
+        }
+      })
+      setSearchResults(results)
+    } else {
+      setSearchResults(null)
+    }
+  }, [search])
+
+  const listExercises = (arr) => {
+    return(
+      arr.map((element) => (
         <TouchableOpacity
-          id={element.id}
+          key={element.id}
           style={{margin: 20}}
           // onPress={() => selectRoutine(element)}
         >
           <Text>{element.title}</Text>
         </TouchableOpacity>
-      ))}
+      ))
+    )
+  }
+
+  return (
+    <View>
+        <TextInput placeholder="Search" value={search} onChangeText={text => setSearch(text)} />
+      {
+        searchResults ? listExercises(searchResults) :
+        exercises ? listExercises(exercises) :
+        <ActivityIndicator />
+      }
     </View>
   );
 }

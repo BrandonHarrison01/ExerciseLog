@@ -6,14 +6,17 @@ import {
   StyleSheet,
   AsyncStorage,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 
-import { weekdays, months } from '../dates'
+import {weekdays, months} from '../dates';
 
 import firestore from '@react-native-firebase/firestore';
 
 function RoutineFeed(props) {
   const [routines, setRoutines] = useState(null);
+  const [searchResults, setSearchResults] = useState(null)
+  const [search, setSearch] = useState('')
   const [date, setDate] = useState();
 
   useEffect(() => {
@@ -42,11 +45,44 @@ function RoutineFeed(props) {
     setDate(getDate);
   }, []);
 
+  useEffect(() => {
+    if(search){
+      let results = []
+      routines.map(routine => {
+        if(routine.title.includes(search)){
+          results.push(routine)
+        }
+      })
+      setSearchResults(results)
+    } else {
+      setSearchResults(null)
+    }
+  }, [search])
+
   const selectRoutine = async (routine) => {
     console.log(routine.document, 'routine');
     await AsyncStorage.setItem('document', `${routine.document}`);
     props.navigation.navigate('Routine');
   };
+
+  const listRoutines = (arr) => {
+    return(
+      arr.map((element) => (
+        <TouchableOpacity
+          key={element.document}
+          style={styles.routine}
+          onPress={() => selectRoutine(element)}>
+          <Text>{element.title}</Text>
+          {element.exercises.map((exercise) => (
+            <Text
+              id={
+                exercise.id
+              }>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
+          ))}
+        </TouchableOpacity>
+      ))
+    )
+  }
 
   return (
     <View>
@@ -56,22 +92,20 @@ function RoutineFeed(props) {
           <Text>{`${date.month} ${date.date}, ${date.year}`}</Text>
         </View>
       )}
-      <TextInput placeholder="Search..." />
-      {routines && routines.map((element) => (
-        <TouchableOpacity
-          key={element.document}
-          style={styles.routine}
-          onPress={() => selectRoutine(element)}>
-          <Text>{element.title}</Text>
-          {element.exercises.map(exercise => (
-            <Text id={exercise.id}>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
-          ))}
-        </TouchableOpacity>
-      ))}
-      <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('ExerciseList')}>
+      <TextInput placeholder="Search..." value={search} onChangeText={text => setSearch(text)} />
+      {
+        searchResults ? listRoutines(searchResults) :
+        routines ? listRoutines(routines) : 
+        <ActivityIndicator />
+      }
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => props.navigation.navigate('ExerciseList')}>
         <Text>SEE EXERCISES</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('NewRoutine')}>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => props.navigation.navigate('NewRoutine')}>
         <Text>ADD NEW ROUTINE</Text>
       </TouchableOpacity>
     </View>
@@ -84,15 +118,15 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5
+    borderRadius: 5,
   },
   navButton: {
     padding: 10,
     margin: 10,
     borderWidth: 1,
     borderColor: 'blue',
-    borderRadius: 5
-  }
-})
+    borderRadius: 5,
+  },
+});
 
 export default RoutineFeed;
