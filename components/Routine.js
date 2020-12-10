@@ -32,7 +32,13 @@ function Routine(props) {
             let arr = []
 
             exercises.forEach(doc => {
-                arr.push(doc.data())
+                const exercise = doc.data()
+
+                for(let i = 0; i < routine.exercises.length; i++){
+                    if(routine.exercises[i].title !== exercise.title){
+                        arr.push(exercise)
+                    }
+                }
             })
 
             setAllExercises(arr)
