@@ -51,22 +51,22 @@ function Routine(props) {
     return(
         <View>
             {routine && <Text>{routine.title}</Text>}
-            {routine && routine.exercises.map(exercise => (
-                <TouchableOpacity style={styles.exercises}>
-                    <Text>{exercise.title}</Text>
-                    <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | Avg. ${exercise.weight} lbs`}</Text>
-                </TouchableOpacity>
-            ))}
             <ScrollView>
+                {routine && routine.exercises.map(exercise => (
+                    <TouchableOpacity style={styles.exercises}>
+                        <Text>{exercise.title}</Text>
+                        <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | Avg. ${exercise.weight} lbs`}</Text>
+                    </TouchableOpacity>
+                ))}
                 {allExercises && allExercises.map(exercise => (
                     <TouchableOpacity>
                         <Text style={styles.exercises}>{exercise.title}</Text>
                     </TouchableOpacity>
                 ))}
+                <TouchableOpacity style={{margin: 20, padding: 30}} onPress={() => props.navigation.navigate("EditRoutine")}>
+                    <Text>Edit Routine</Text>
+                </TouchableOpacity>
             </ScrollView>
-            <TouchableOpacity>
-                <Text>Edit Routine</Text>
-            </TouchableOpacity>
         </View>
     )
 }
