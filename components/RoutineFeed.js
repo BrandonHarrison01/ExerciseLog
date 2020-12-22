@@ -4,10 +4,10 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  AsyncStorage,
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {weekdays, months} from '../dates';
 
@@ -75,7 +75,7 @@ function RoutineFeed(props) {
           <Text>{element.title}</Text>
           {element.exercises.map((exercise) => (
             <Text
-              id={
+              key={
                 exercise.id
               }>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
           ))}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableOpacity, Text, AsyncStorage, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import firestore from '@react-native-firebase/firestore';
 
