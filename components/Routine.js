@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, View, StyleSheet, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import firestore from '@react-native-firebase/firestore';
@@ -11,41 +11,42 @@ function Routine(props) {
     useEffect(() => {
         const fetchRoutineExercises = async () => {
             const document = await AsyncStorage.getItem("document")
-            const routine = await firestore()
+            const getRoutine = await firestore()
               .collection('users1')
               .doc('initial')
               .collection('created-routines')
               .doc(document)
               .get()
-            setRoutine(routine.data())
-        };
-        fetchRoutineExercises()
-    }, []);
+            const routineData = getRoutine.data()
+            setRoutine(routineData)
 
-    useEffect(() => {
-        const fetchExercises = async () => {
             const exercises = await firestore()
                 .collection('users1')
                 .doc('initial')
                 .collection('exercises')
                 .get()
-            
+
             let arr = []
 
             exercises.forEach(doc => {
                 const exercise = doc.data()
-
-                for(let i = 0; i < routine.exercises.length; i++){
-                    if(routine.exercises[i].title !== exercise.title){
-                        arr.push(exercise)
+                let push = true
+                
+                for(let i = 0; i < routineData.exercises.length; i++){
+                    if(routineData.exercises[i].title === exercise.title){
+                        push = false
                     }
                 }
-            })
 
+                if(push){
+                    arr.push(exercise)
+                }
+
+            })
             setAllExercises(arr)
-        }
-        fetchExercises()
-    }, [])
+        };
+        fetchRoutineExercises()
+    }, []);
 
     return(
         <View>
@@ -56,9 +57,16 @@ function Routine(props) {
                     <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | Avg. ${exercise.weight} lbs`}</Text>
                 </TouchableOpacity>
             ))}
-            {allExercises && allExercises.map(exercise => (
-                <Text style={styles.exercises}>{exercise.title}</Text>
-            ))}
+            <ScrollView>
+                {allExercises && allExercises.map(exercise => (
+                    <TouchableOpacity>
+                        <Text style={styles.exercises}>{exercise.title}</Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+            <TouchableOpacity>
+                <Text>Edit Routine</Text>
+            </TouchableOpacity>
         </View>
     )
 }

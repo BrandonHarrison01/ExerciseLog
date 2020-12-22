@@ -60,7 +60,6 @@ function RoutineFeed(props) {
   }, [search])
 
   const selectRoutine = async (routine) => {
-    console.log(routine.document, 'routine');
     await AsyncStorage.setItem('document', `${routine.document}`);
     props.navigation.navigate('Routine');
   };
@@ -76,7 +75,7 @@ function RoutineFeed(props) {
           {element.exercises.map((exercise) => (
             <Text
               key={
-                exercise.id
+                exercise.title
               }>{`${exercise.title} ${exercise.sets} X ${exercise.reps} | ${exercise.weight} lbs`}</Text>
           ))}
         </TouchableOpacity>
