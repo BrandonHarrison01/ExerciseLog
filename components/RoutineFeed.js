@@ -95,7 +95,7 @@ function RoutineFeed(props) {
       {
         searchResults ? listRoutines(searchResults) :
         routines ? listRoutines(routines) : 
-        <ActivityIndicator />
+        <ActivityIndicator size='large' color='gray' />
       }
       <TouchableOpacity
         style={styles.navButton}

@@ -54,7 +54,7 @@ function ExerciseList() {
 
   return (
     <View>
-        <TextInput placeholder="Search" value={search} onChangeText={text => setSearch(text)} />
+        <TextInput placeholder="SEARCH..." value={search} onChangeText={text => setSearch(text)} />
         <ScrollView>
         {
           searchResults ? listExercises(searchResults) :

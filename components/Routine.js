@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import firestore from '@react-native-firebase/firestore';
 
-function Routine(props) {
+function Routine({ navigation }) {
     const [routine, setRoutine] = useState(null)
     const [allExercises, setAllExercises] = useState(null)
     const [searchResults, setSearchResults] = useState(null)
@@ -80,12 +80,12 @@ function Routine(props) {
             {routine && <Text>{routine.title}</Text>}
             <ScrollView>
                 {routine && routine.exercises.map(exercise => (
-                    <TouchableOpacity style={styles.exercises} key={exercise.title}>
+                    <TouchableOpacity style={styles.exercises} key={exercise.title} onPress={() => navigation.navigate('RoutineExercise', exercise)}>
                         <Text>{exercise.title}</Text>
                         <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
                     </TouchableOpacity>
                 ))}
-                <TouchableOpacity style={{margin: 20, padding: 30}} onPress={() => props.navigation.navigate("EditRoutine")}>
+                <TouchableOpacity style={{margin: 20, padding: 30}} onPress={() => navigation.navigate("EditRoutine")}>
                     <Text>Edit Routine</Text>
                 </TouchableOpacity>
                 <View style={{ borderTopColor: 'black', borderTopWidth: 1 }}>
@@ -95,7 +95,7 @@ function Routine(props) {
                 {
                     searchResults ? listExercises(searchResults) :
                     allExercises ? listExercises(allExercises) :
-                    <ActivityIndicator size="large" color="#00ff00" />
+                    <ActivityIndicator size="large" color="gray" />
                 }
             </ScrollView>
         </View>

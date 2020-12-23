@@ -17,6 +17,7 @@ import Routine from './components/Routine';
 import NewRoutine from './components/NewRoutine';
 import EditRoutine from './components/EditRoutine';
 import ExerciseList from './components/ExerciseList';
+import RoutineExercise from './components/RoutineExercise';
 
 const Stack = createStackNavigator()
 
@@ -47,6 +48,10 @@ const App = () => {
         <Stack.Screen 
           name='EditRoutine'
           component={EditRoutine}
+        />
+        <Stack.Screen 
+          name='RoutineExercise'
+          component={RoutineExercise}
         />
       </Stack.Navigator>
     </NavigationContainer>
