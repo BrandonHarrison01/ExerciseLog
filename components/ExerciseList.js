@@ -42,7 +42,7 @@ function ExerciseList() {
     return(
       arr.map((element) => (
         <TouchableOpacity
-          key={element.id}
+          key={element.title}
           style={{margin: 20}}
           // onPress={() => selectRoutine(element)}
         >

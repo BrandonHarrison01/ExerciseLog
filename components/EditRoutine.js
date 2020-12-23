@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, TouchableOpacity, TextInput } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -24,7 +24,11 @@ function EditRoutine() {
 
     return(
         <View>
-            <Text>Edit Routine</Text>
+            <View>
+                <Text>TITLE</Text>
+                <TextInput />
+            </View>
+            <TextInput placeholder="SEARCH EXERCISES" />
             {routineExercises && <Text>{routineExercises.title}</Text>}
             <ScrollView>
                 {routineExercises && routineExercises.exercises.map(exercise => (
