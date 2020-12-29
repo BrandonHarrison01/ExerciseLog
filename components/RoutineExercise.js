@@ -9,6 +9,16 @@ import {
 
 function RoutineExercise({route}) {
   const [customSelected, setCustomSelected] = useState(false);
+  const [customSets, setCustomSets] = useState([[0, 0]])
+
+  const addSet = () => {
+      let arr = customSets
+      arr.push([6, 225])
+
+      setCustomSets(arr)
+  }
+
+  console.log(customSets, 'rerender')
 
   return (
     <View>
@@ -40,8 +50,10 @@ function RoutineExercise({route}) {
         </View>
       ) : (
         <View>
-            <Text style={styles.border} >Custom Set</Text>
-            <TouchableOpacity style={styles.border} >
+            {customSets.map(set => (
+                <Text style={styles.border}>{`${set[0]} reps | ${set[1]} lbs`}</Text>
+            ))}
+            <TouchableOpacity style={styles.border} onPress={() => {setCustomSets(sets => [...sets, [4, 20]])}}>
                 <Text>Add Set</Text>
             </TouchableOpacity>
         </View>
@@ -63,6 +75,8 @@ const styles = StyleSheet.create({
   border: {
     borderColor: 'blue',
     borderWidth: 1,
+    marginTop: 10,
+    padding: 5
   },
   customButton: {
     padding: 10,
