@@ -54,7 +54,7 @@ function NewRoutine() {
   const mappedExercises = (object) => {
     return (
         object.map((exercise) => (
-            <View style={styles.exercises} id={exercise.id}>
+            <View style={styles.exercises} key={exercise.id}>
               <Text>{exercise.title}</Text>
               <TouchableOpacity style={styles.addButton}>
                 <Text>+</Text>

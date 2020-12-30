@@ -53,7 +53,7 @@ function RoutineExercise({route}) {
             {customSets.map(set => (
                 <Text style={styles.border}>{`${set[0]} reps | ${set[1]} lbs`}</Text>
             ))}
-            <TouchableOpacity style={styles.border} onPress={() => {setCustomSets(sets => [...sets, [4, 20]])}}>
+            <TouchableOpacity style={styles.border} onPress={() => setCustomSets(sets => [...sets, [4, 20]])}>
                 <Text>Add Set</Text>
             </TouchableOpacity>
         </View>
