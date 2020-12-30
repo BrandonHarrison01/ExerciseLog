@@ -11,15 +11,6 @@ function RoutineExercise({route}) {
   const [customSelected, setCustomSelected] = useState(false);
   const [customSets, setCustomSets] = useState([[0, 0]])
 
-  const addSet = () => {
-      let arr = customSets
-      arr.push([6, 225])
-
-      setCustomSets(arr)
-  }
-
-  console.log(customSets, 'rerender')
-
   return (
     <View>
       <Text>{route.params.title}</Text>

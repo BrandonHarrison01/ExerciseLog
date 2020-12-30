@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 
 function Routine({navigation}) {
+    const [routineTitle, setRoutineTitle] = useState(null)
   const [routineExercises, setRoutineExercises] = useState(null);
   const [allExercises, setAllExercises] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
@@ -29,6 +30,7 @@ function Routine({navigation}) {
         .get();
       const routineData = getRoutine.data();
       setRoutineExercises(routineData.exercises);
+      setRoutineTitle(routineData.title)
 
       const exercises = await firestore()
         .collection('users1')
@@ -84,7 +86,8 @@ function Routine({navigation}) {
     routineExercises.map((ex, i) => {
         if(ex.document === doc){
             const selected = routineExercises[i]
-            selected.status = 'complete'
+            selected.status = selected.status === 'complete' ? 'incomplete' : 'complete'
+            console.log(selected)
             setRoutineExercises([...routineExercises])
         }
     })
@@ -92,7 +95,7 @@ function Routine({navigation}) {
 
   return (
     <View>
-      {/* {routine && <Text>{routine.title}</Text>} */}
+      {routineTitle && <Text>{routineTitle}</Text>}
       <ScrollView>
         {routineExercises &&
           routineExercises.map(
@@ -109,6 +112,7 @@ function Routine({navigation}) {
                     <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
                   </View>
                   <TouchableOpacity
+                    onPress={() => completeExercise(exercise.document)}
                     style={{borderWidth: 1, borderColor: 'blue', padding: 5}}>
                     <Text>checked</Text>
                   </TouchableOpacity>

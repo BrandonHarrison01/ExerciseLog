@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity, TextInput, ActivityIndicator} from 'react-
 import firestore from '@react-native-firebase/firestore';
 import { ScrollView } from 'react-native-gesture-handler';
 
-function ExerciseList() {
+function ExerciseList({ navigation }) {
   const [exercises, setExercises] = useState(null);
   const [searchResults, setSearchResults] = useState(null)
   const [search, setSearch] = useState('')
@@ -54,6 +54,9 @@ function ExerciseList() {
 
   return (
     <View>
+        <TouchableOpacity style={{ borderColor: 'green', borderWidth: 1, padding: 5, margin: 10 }} onPress={() => navigation.navigate('AddExercise')}>
+          <Text>ADD NEW EXERCISE</Text>
+        </TouchableOpacity>
         <TextInput placeholder="SEARCH..." value={search} onChangeText={text => setSearch(text)} />
         <ScrollView>
         {
