@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 
+import firestore from '@react-native-firebase/firestore'
+
 function AddExercise() {
+    const [routines, setRoutines] = useState()
+
+    useEffect(() => {
+        firestore()
+          .collection('users1')
+          .doc('initial')
+          .collection('created-routines')
+          .get()
+          .then((querySnapshot) => {
+            let r = [];
+            querySnapshot.forEach((doc) => {
+              r.push(doc.data());
+            });
+            setRoutines(r);
+          });
+      }, []);
+    
+
     return (
         <View>
             <Text>Add Exercise</Text>
@@ -38,6 +58,25 @@ function AddExercise() {
             <View style={{borderTopColor: 'black', borderTopWidth: 1}}>
                 <Text style={{marginLeft: 20}}>OPTIONAL</Text>
             </View>
+            <View style={{ flexDirection: 'row' }}>
+                <Text>ONE REP MAX</Text>
+                <TextInput placeholder='WEIGHT' />
+                <Text>LBS</Text>
+            </View>
+            <View>
+                <Text>PLANNED DAYS:</Text>
+                {
+                    routines && routines.map(routine => (
+                        <TouchableOpacity style={ styles.routines }>
+                            <Text>{routine.title}</Text>
+                        </TouchableOpacity>
+                    ))
+                }
+            </View>
+            <View>
+                <Text>DESCRIPTION:</Text>
+                <TextInput placeholder='description' multiline={true} />
+            </View>
         </View>
     )
 }
@@ -58,7 +97,13 @@ const styles = StyleSheet.create({
         height: 14,
         borderRadius: 7,
         backgroundColor: '#131313' // You can set it default or with yours one…
+    },
+    routines: {
+        margin: 5,
+        padding: 5,
+        borderColor: 'black',
+        borderWidth: 1
     }
-    });
+});
 
 export default AddExercise
