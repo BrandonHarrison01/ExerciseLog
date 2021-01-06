@@ -8,6 +8,8 @@ import {
   Dimensions
 } from 'react-native';
 
+import Graph from './Graph';
+
 export const { width: SIZE} = Dimensions.get('window')
 
 export const data = [
@@ -27,6 +29,7 @@ function RoutineExercise({route}) {
   return (
     <View>
       <Text>{route.params.title}</Text>
+      <Graph />
       <TouchableOpacity
         style={
           !customSelected ? styles.customButton : styles.customButtonSelected

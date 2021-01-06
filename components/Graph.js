@@ -8,7 +8,7 @@ function Graph() {
         <View style={{ margin: 10, borderColor: 'red', borderWidth: 2 }}>
             <Svg height="200" width="350">
                 <Polyline
-                    points="0,195 25,85 50,75 75,20 95,5 350,5"
+                    points="0,195 12,142 25,85 50,75 75,40 95,25 200,15 350,5"
                     fill="none"
                     stroke="black"
                     strokeWidth="3"

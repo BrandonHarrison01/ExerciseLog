@@ -20,19 +20,12 @@ import ExerciseList from './components/ExerciseList';
 import RoutineExercise from './components/RoutineExercise';
 import AddExercise from './components/AddExercise';
 
-
-import Graph from './components/Graph';
-
 const Stack = createStackNavigator()
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-          name='Graph'
-          component={Graph}
-        />
         <Stack.Screen 
           name='Login'
           component={Login}
