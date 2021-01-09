@@ -3,12 +3,14 @@ import { View, Text } from 'react-native'
 
 import Svg, { Path, Polyline } from 'react-native-svg'
 
-function Graph() {
+function Graph({ exercise }) {
+    console.log(exercise, 'es')
+    const line = exercise && `0,${exercise[0]} 350,${exercise[2]}`
     return(
         <View style={{ margin: 10, borderColor: 'red', borderWidth: 2 }}>
             <Svg height="200" width="350">
                 <Polyline
-                    points="0,195 12,142 25,85 50,75 75,40 95,25 200,15 350,5"
+                    points={line && line}
                     fill="none"
                     stroke="black"
                     strokeWidth="3"
