@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text, Dimensions, ActivityIndicator } from 'react-native'
 
 import Svg, { Path, Polyline } from 'react-native-svg'
 
@@ -7,24 +7,29 @@ const dimensions = Dimensions.get('window')
 
 function Graph({ exercise }) {
     const [line, setLine] = useState('')
+    const [width, setWidth] = useState(dimensions.width - 24)
 
     useEffect(() => {
         if(exercise){
-            let minWeight = exercise.weight[0]
-            let maxWeight = exercise.weight[0]
+            let coordinates = ''
+            let weights = exercise.weight
+            let x = 0
+            const minWeight = Math.min(...weights)
+            const maxWeight = Math.max(...weights)
+            const weightDiff = maxWeight - minWeight
+            const xIncrement = width / (exercise.date.length - 1)
 
-            exercise.weight.forEach(element => {
-                if(element < minWeight){
-                    minWeight = element
-                }
+            weights.forEach(weight => {
+                let a = weight - minWeight
+                let b = (weightDiff - a) / weightDiff
+                let y = 180 * b + 10
 
-                if(element > maxWeight){
-                    maxWeight = element
-                }
+                coordinates = coordinates.concat(`${x},${y} `)
+                x = x + xIncrement
             });
 
-            console.log(minWeight, 'es')
-            console.log(maxWeight, 'es')
+            setLine(coordinates)
+
         }
     }, [ exercise ])
 
@@ -32,20 +37,22 @@ function Graph({ exercise }) {
 
     return(
         <View style={{ margin: 10, borderColor: 'red', borderWidth: 2 }}>
-            <Svg height="200" width={dimensions.width - 24}>
-                <Polyline
-                    points={line}
-                    fill="none"
-                    stroke="black"
-                    strokeWidth="3"
-                />
-                {/* <Polyline
-                    points="0,175 25,125 50,75 75,20 95,5 387,5"
-                    fill="none"
-                    stroke="blue"
-                    strokeWidth="3"
-                /> */}
-            </Svg>
+            { line[0] && (
+                <Svg height="200" width={width}>
+                    <Polyline
+                        points={line}
+                        fill="none"
+                        stroke="black"
+                        strokeWidth="3"
+                    />
+                    {/* <Polyline
+                        points="0,175 25,125 50,75 75,20 95,5 387,5"
+                        fill="none"
+                        stroke="blue"
+                        strokeWidth="3"
+                    /> */}
+                </Svg>
+            )}
         </View>
     )
 }
