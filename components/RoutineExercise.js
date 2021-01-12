@@ -4,15 +4,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  Dimensions
+  StyleSheet
 } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
 import Graph from './Graph';
-
-export const { width: SIZE } = Dimensions.get('window')
 
 function RoutineExercise({route}) {
   const [customSelected, setCustomSelected] = useState(false);
