@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 
 function Routine({navigation}) {
-    const [routineTitle, setRoutineTitle] = useState(null)
+  const [routineTitle, setRoutineTitle] = useState(null);
   const [routineExercises, setRoutineExercises] = useState(null);
   const [allExercises, setAllExercises] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
@@ -30,7 +30,7 @@ function Routine({navigation}) {
         .get();
       const routineData = getRoutine.data();
       setRoutineExercises(routineData.exercises);
-      setRoutineTitle(routineData.title)
+      setRoutineTitle(routineData.title);
 
       const exercises = await firestore()
         .collection('users1')
@@ -78,33 +78,46 @@ function Routine({navigation}) {
     return arr.map((ex) => (
       <TouchableOpacity key={ex.title} style={styles.exercises}>
         <Text>{ex.title}</Text>
+        <TouchableOpacity
+          style={{padding: 10, borderColor: 'green', borderWidth: 1}}
+          onPress={() => addExercise(ex)}>
+          <Text>+</Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     ));
   };
 
   const completeExercise = (doc) => {
     routineExercises.map((ex, i) => {
-        if(ex.document === doc){
-            const selected = routineExercises[i]
-            selected.status = selected.status === 'complete' ? 'incomplete' : 'complete'
-            console.log(selected)
-            setRoutineExercises([...routineExercises])
-        }
-    })
-  }
+      if (ex.document === doc) {
+        const selected = routineExercises[i];
+        selected.status =
+          selected.status === 'complete' ? 'incomplete' : 'complete';
+        console.log(selected);
+        setRoutineExercises([...routineExercises]);
+      }
+    });
+  };
 
-  const removeExercise = doc => {
-    let temp = routineExercises
+  const removeExercise = (doc) => {
+    let temp = routineExercises;
 
     routineExercises.forEach((ex, i) => {
-      if(ex.document === doc){
-        console.log(i, 'i')
-        temp.splice(i, 1)
-        console.log(temp, 'temp')
-        setRoutineExercises([...temp])
+      if (ex.document === doc) {
+        console.log(i, 'i');
+        temp.splice(i, 1);
+        console.log(temp, 'temp');
+        setRoutineExercises([...temp]);
       }
-    })
-  }
+    });
+  };
+
+  const addExercise = (ex) => {
+    let temp = routineExercises;
+    temp.push(ex);
+    console.log(temp, 'tempp');
+    setRoutineExercises([...temp]);
+  };
 
   return (
     <View>
