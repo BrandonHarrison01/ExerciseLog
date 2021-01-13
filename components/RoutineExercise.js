@@ -47,7 +47,7 @@ function RoutineExercise({route}) {
           </View>
         </View>
       )}
-      <View style={{ borderBottomColor: 'black', borderBottomWidth: 2 }} />
+      <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
       <View style={{ flexDirection: 'row'}}>
         <TouchableOpacity
           style={
@@ -99,6 +99,12 @@ function RoutineExercise({route}) {
             </TouchableOpacity>
         </View>
       )}
+      <View style={{borderTopColor: 'black', borderTopWidth: 1}}>
+        <Text style={{marginLeft: 20}}>NOTES</Text>
+      </View>
+      <TouchableOpacity style={{ padding: 10, borderColor: 'green', borderWidth: 1, margin: 20 }}>
+        <Text>ADD NOTE</Text>
+      </TouchableOpacity>
     </View>
   );
 }

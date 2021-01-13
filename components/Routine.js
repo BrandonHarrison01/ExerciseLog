@@ -93,6 +93,19 @@ function Routine({navigation}) {
     })
   }
 
+  const removeExercise = doc => {
+    let temp = routineExercises
+
+    routineExercises.forEach((ex, i) => {
+      if(ex.document === doc){
+        console.log(i, 'i')
+        temp.splice(i, 1)
+        console.log(temp, 'temp')
+        setRoutineExercises([...temp])
+      }
+    })
+  }
+
   return (
     <View>
       {routineTitle && <Text>{routineTitle}</Text>}
@@ -136,6 +149,11 @@ function Routine({navigation}) {
                     <Text>{exercise.title}</Text>
                     <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
                   </View>
+                  <TouchableOpacity
+                    style={{borderWidth: 1, borderColor: 'red', padding: 5}}
+                    onPress={() => removeExercise(exercise.document)}>
+                    <Text>-</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity
                     style={{borderWidth: 1, borderColor: 'blue', padding: 5}}
                     onPress={() => completeExercise(exercise.document)}>
