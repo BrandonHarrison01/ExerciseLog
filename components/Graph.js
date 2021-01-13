@@ -36,21 +36,15 @@ function Graph({ exercise }) {
     // const line = exercise && `0,190 387,10`
 
     return(
-        <View style={{ margin: 10, borderColor: 'red', borderWidth: 2 }}>
+        <View style={{ margin: 10, borderColor: 'black', borderWidth: 2, backgroundColor: '#c2c2c2' }}>
             { line[0] && (
                 <Svg height="200" width={width}>
                     <Polyline
                         points={line}
                         fill="none"
-                        stroke="black"
-                        strokeWidth="3"
-                    />
-                    {/* <Polyline
-                        points="0,175 25,125 50,75 75,20 95,5 387,5"
-                        fill="none"
                         stroke="blue"
                         strokeWidth="3"
-                    /> */}
+                    />
                 </Svg>
             )}
         </View>

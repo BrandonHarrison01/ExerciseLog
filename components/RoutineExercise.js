@@ -12,7 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import Graph from './Graph';
 
 function RoutineExercise({route}) {
-  const [customSelected, setCustomSelected] = useState(false);
+  const [setSelector, setSetSelector] = useState('fixed');
   const [customSets, setCustomSets] = useState([[0, 0]])
   const [selectedExercise, setSelectedExercise] = useState()
   const [selectedSet, setSelectedSet] = useState()
@@ -38,23 +38,40 @@ function RoutineExercise({route}) {
         <View>
           <Text>{selectedExercise.title}</Text>
           <Graph exercise={selectedExercise.stats[selectedSet]} />
-          <View>
+          <View style={{ flexDirection: 'row' }} >
             {selectedExercise.sets.map(ex => (
-              <TouchableOpacity style={ selectedSet === ex ? styles.selectedSet : styles.set } onPress={() => setSelectedSet(ex)} >
+              <TouchableOpacity style={ selectedSet === ex ? styles.selectedTab : styles.tab } onPress={() => setSelectedSet(ex)} >
                 <Text>{ex}</Text>
               </TouchableOpacity>
             ))}
           </View>
         </View>
       )}
-      <TouchableOpacity
-        style={
-          !customSelected ? styles.customButton : styles.customButtonSelected
-        }
-        onPress={() => setCustomSelected(!customSelected)}>
-        <Text>Custom</Text>
-      </TouchableOpacity>
-      {!customSelected ? (
+      <View style={{ borderBottomColor: 'black', borderBottomWidth: 2 }} />
+      <View style={{ flexDirection: 'row'}}>
+        <TouchableOpacity
+          style={
+            setSelector === 'fixed' ? styles.selectedTab : styles.tab
+          }
+          onPress={() => setSetSelector('fixed')}>
+          <Text>Fixed</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
+            setSelector === 'custom' ? styles.selectedTab : styles.tab
+          }
+          onPress={() => setSetSelector('custom')}>
+          <Text>Custom</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
+            setSelector === 'pyramid' ? styles.selectedTab : styles.tab
+          }
+          onPress={() => setSetSelector('pyramid')}>
+          <Text>Pyramid</Text>
+        </TouchableOpacity>
+      </View>
+      {setSelector === 'fixed' ? (
         <View style={styles.setContainer}>
           <TextInput
             style={styles.border}
@@ -102,26 +119,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 5
   },
-  customButton: {
-    padding: 10,
-    borderColor: 'red',
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  customButtonSelected: {
-    padding: 10,
-    borderColor: 'red',
-    backgroundColor: '#fa9189',
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  set: {
+  tab: {
     margin: 10,
     padding: 10,
     borderColor: 'gray',
     borderWidth: 1
   },
-  selectedSet: {
+  selectedTab: {
+    backgroundColor: '#c2c2c2',
     margin: 10,
     padding: 10,
     borderColor: 'blue',
