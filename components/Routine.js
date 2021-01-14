@@ -18,6 +18,7 @@ function Routine({navigation}) {
   const [allExercises, setAllExercises] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [search, setSearch] = useState('');
+  const [filteredExercises, setFilteredExercises] = useState(null)
 
   useEffect(() => {
     const fetchRoutineExercises = async () => {
@@ -37,24 +38,17 @@ function Routine({navigation}) {
         .doc('initial')
         .collection('exercises')
         .get();
+      let arr = []
+      exercises.forEach(doc => {
+        arr.push(doc.data())
+      })
+      // const exerciseData = exercises.data()
+      // console.log(exerciseData, 'ex data')
+      // setAllExercises(exerciseData) 
 
-      let arr = [];
-
-      exercises.forEach((doc) => {
-        const exercise = doc.data();
-        let push = true;
-
-        for (let i = 0; i < routineData.exercises.length; i++) {
-          if (routineData.exercises[i].title === exercise.title) {
-            push = false;
-          }
-        }
-
-        if (push) {
-          arr.push(exercise);
-        }
-      });
-      setAllExercises(arr);
+      setAllExercises(arr)
+      console.log(arr, 'aarrg')
+      filterExercises()
     };
     fetchRoutineExercises();
   }, []);
@@ -74,18 +68,33 @@ function Routine({navigation}) {
     }
   }, [search]);
 
-  const listExercises = (arr) => {
-    return arr.map((ex) => (
-      <TouchableOpacity key={ex.title} style={styles.exercises}>
-        <Text>{ex.title}</Text>
-        <TouchableOpacity
-          style={{padding: 10, borderColor: 'green', borderWidth: 1}}
-          onPress={() => addExercise(ex)}>
-          <Text>+</Text>
-        </TouchableOpacity>
-      </TouchableOpacity>
-    ));
-  };
+  const filterExercises = () => {
+    let arr = [];
+
+    // ↓ all exercises are null when component is rendered ↓
+    console.log(allExercises, 'all')
+    
+    if(allExercises){
+      allExercises.forEach((exercise) => {
+      // const exercise = doc.data();
+      // console.log(exercise, 'test')
+        let push = true;
+
+        for (let i = 0; i < routineExercises.length; i++) {
+          if (routineExercises[i].title === exercise.title) {
+            push = false;
+          }
+        }
+
+        if (push) {
+          arr.push(exercise);
+        }
+      });
+
+    setFilteredExercises(arr);
+    }
+    // console.log(filteredExercises)
+  }
 
   const completeExercise = (doc) => {
     routineExercises.map((ex, i) => {
@@ -108,15 +117,30 @@ function Routine({navigation}) {
         temp.splice(i, 1);
         console.log(temp, 'temp');
         setRoutineExercises([...temp]);
+        filterExercises()
       }
     });
   };
-
+  
   const addExercise = (ex) => {
     let temp = routineExercises;
     temp.push(ex);
     console.log(temp, 'tempp');
     setRoutineExercises([...temp]);
+    filterExercises()
+  };
+
+  const listExercises = (arr) => {
+    return arr.map((ex) => (
+      <TouchableOpacity key={ex.title} style={styles.exercises}>
+        <Text>{ex.title}</Text>
+        <TouchableOpacity
+          style={{padding: 10, borderColor: 'green', borderWidth: 1}}
+          onPress={() => addExercise(ex)}>
+          <Text>+</Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    ));
   };
 
   return (
@@ -190,8 +214,8 @@ function Routine({navigation}) {
         />
         {searchResults ? (
           listExercises(searchResults)
-        ) : allExercises ? (
-          listExercises(allExercises)
+        ) : filteredExercises ? (
+          listExercises(filteredExercises)
         ) : (
           <ActivityIndicator size="large" color="gray" />
         )}
