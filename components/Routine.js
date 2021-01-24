@@ -48,7 +48,7 @@ function Routine({navigation}) {
 
       setAllExercises(arr)
       console.log(arr, 'aarrg')
-      filterExercises()
+      // filterExercises()
     };
     fetchRoutineExercises();
   }, []);
@@ -67,6 +67,10 @@ function Routine({navigation}) {
       setSearchResults(null);
     }
   }, [search]);
+
+  useEffect(() => {
+    filterExercises()
+  }, [ allExercises ])
 
   const filterExercises = () => {
     let arr = [];
@@ -91,10 +95,11 @@ function Routine({navigation}) {
         }
       });
 
-    setFilteredExercises(arr);
+      setFilteredExercises(arr);
     }
-    // console.log(filteredExercises)
   }
+  
+  console.log(filteredExercises, 'g')
 
   const completeExercise = (doc) => {
     routineExercises.map((ex, i) => {
