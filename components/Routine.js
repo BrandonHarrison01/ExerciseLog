@@ -18,7 +18,7 @@ function Routine({navigation}) {
   const [allExercises, setAllExercises] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [search, setSearch] = useState('');
-  const [filteredExercises, setFilteredExercises] = useState(null)
+  const [filteredExercises, setFilteredExercises] = useState(null);
 
   useEffect(() => {
     const fetchRoutineExercises = async () => {
@@ -38,17 +38,12 @@ function Routine({navigation}) {
         .doc('initial')
         .collection('exercises')
         .get();
-      let arr = []
-      exercises.forEach(doc => {
-        arr.push(doc.data())
-      })
-      // const exerciseData = exercises.data()
-      // console.log(exerciseData, 'ex data')
-      // setAllExercises(exerciseData) 
+      let arr = [];
+      exercises.forEach((doc) => {
+        arr.push(doc.data());
+      });
 
-      setAllExercises(arr)
-      console.log(arr, 'aarrg')
-      // filterExercises()
+      setAllExercises(arr);
     };
     fetchRoutineExercises();
   }, []);
@@ -69,19 +64,16 @@ function Routine({navigation}) {
   }, [search]);
 
   useEffect(() => {
-    filterExercises()
-  }, [ allExercises ])
+    filterExercises();
+  }, [allExercises]);
 
   const filterExercises = () => {
     let arr = [];
 
     // ↓ all exercises are null when component is rendered ↓
-    console.log(allExercises, 'all')
-    
-    if(allExercises){
+
+    if (allExercises) {
       allExercises.forEach((exercise) => {
-      // const exercise = doc.data();
-      // console.log(exercise, 'test')
         let push = true;
 
         for (let i = 0; i < routineExercises.length; i++) {
@@ -97,9 +89,7 @@ function Routine({navigation}) {
 
       setFilteredExercises(arr);
     }
-  }
-  
-  console.log(filteredExercises, 'g')
+  };
 
   const completeExercise = (doc) => {
     routineExercises.map((ex, i) => {
@@ -122,17 +112,17 @@ function Routine({navigation}) {
         temp.splice(i, 1);
         console.log(temp, 'temp');
         setRoutineExercises([...temp]);
-        filterExercises()
+        filterExercises();
       }
     });
   };
-  
+
   const addExercise = (ex) => {
     let temp = routineExercises;
     temp.push(ex);
     console.log(temp, 'tempp');
     setRoutineExercises([...temp]);
-    filterExercises()
+    filterExercises();
   };
 
   const listExercises = (arr) => {
@@ -187,9 +177,17 @@ function Routine({navigation}) {
                   onPress={() =>
                     navigation.navigate('RoutineExercise', exercise)
                   }>
+                  
+                  {/* check if exercise in routineExerices array is from routine or added exercise */}
                   <View>
                     <Text>{exercise.title}</Text>
-                    <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
+                    {exercise.fromRoutine ? (
+                      <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
+                      ) : (
+                        // if added exercise use latest exercise data to populate sets/reps/weight 
+                      // <Text>{`Sets: ${...} | Reps: ${...} | ${...} lbs`}</Text>
+                      <Text>added exercise</Text>
+                    )}
                   </View>
                   <TouchableOpacity
                     style={{borderWidth: 1, borderColor: 'red', padding: 5}}
