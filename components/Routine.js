@@ -185,8 +185,7 @@ function Routine({navigation}) {
                       <Text>{`Sets: ${exercise.sets} | Reps: ${exercise.reps} | ${exercise.weight} lbs`}</Text>
                       ) : (
                         // if added exercise use latest exercise data to populate sets/reps/weight 
-                      // <Text>{`Sets: ${...} | Reps: ${...} | ${...} lbs`}</Text>
-                      <Text>added exercise</Text>
+                      <Text>{`Sets: ${exercise.latest[1]} | Reps: ${exercise.latest[2]} | ${exercise.latest[3]} lbs`}</Text>
                     )}
                   </View>
                   <TouchableOpacity

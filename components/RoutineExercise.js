@@ -14,7 +14,7 @@ import Graph from './Graph';
 function RoutineExercise({route}) {
   const [setSelector, setSetSelector] = useState('fixed');
   const [customSets, setCustomSets] = useState([[0, 0]])
-  const [selectedExercise, setSelectedExercise] = useState()
+  const [selectedExercise, setSelectedExercise] = useState(null)
   const [selectedSet, setSelectedSet] = useState()
 
   useEffect(() => {
@@ -31,6 +31,8 @@ function RoutineExercise({route}) {
     }
     fetchExercise()
   }, [])
+
+  console.log(selectedExercise, 'selected')
 
   return (
     <View>
@@ -71,21 +73,21 @@ function RoutineExercise({route}) {
           <Text>Pyramid</Text>
         </TouchableOpacity>
       </View>
-      {setSelector === 'fixed' ? (
+      {setSelector === 'fixed' && selectedExercise ? (
         <View style={styles.setContainer}>
           <TextInput
             style={styles.border}
-            placeholder={route.params.sets.toString()}
+            placeholder={selectedExercise.latest[1].toString()}
           />
           <Text style={styles.border}>X</Text>
           <TextInput
             style={styles.border}
-            placeholder={route.params.reps.toString()}
+            placeholder={selectedExercise.latest[2].toString()}
           />
           <Text style={styles.border}>OF</Text>
           <TextInput
             style={styles.border}
-            placeholder={route.params.weight.toString()}
+            placeholder={selectedExercise.latest[3].toString()}
           />
           <Text style={styles.border}>LBS</Text>
         </View>
