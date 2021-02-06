@@ -32,8 +32,6 @@ function RoutineExercise({route}) {
     fetchExercise()
   }, [])
 
-  console.log(selectedExercise, 'selected')
-
   return (
     <View>
       {selectedExercise && (
