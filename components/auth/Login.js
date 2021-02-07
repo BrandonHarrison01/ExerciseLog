@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, Text, Alert, StyleSheet, TextInput } from 'react-native'
 
+import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
 function Login({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onSubmit = () => {
-        auth().createUserWithEmailAndPassword(email, password)
-            .then(cred => {
-                console.log(cred)
-                navigation.navigate('RoutineFeed')
-            })
-            .catch(err => {
-                console.log(err, 'error')
-            })
+    const onSubmit = async () => {
+        try {
+            const cred = await auth().createUserWithEmailAndPassword(email, password)
+            const res = firestore().collection('users1').doc(cred.user.uid).set({empty: 'object'})
+            console.log(res, 'res')
+        } catch(err) {
+            console.log(err, 'error')
+        }
+        // if(res){
+        //     navigation.navigate('RoutineFeed')
+        // }
     }
 
     return(
