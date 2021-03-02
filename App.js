@@ -11,7 +11,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Login from './components/auth/Login'
+import RegisterEmail from './components/auth/RegisterEmail'
 import RoutineFeed from './components/RoutineFeed'
 import Routine from './components/Routine';
 import NewRoutine from './components/NewRoutine';
@@ -27,8 +27,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name='Login'
-          component={Login}
+          name='RegisterEmail'
+          component={RegisterEmail}
         />
         <Stack.Screen 
           name='RoutineFeed'
