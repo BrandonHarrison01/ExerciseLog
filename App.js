@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import RegisterEmail from './components/auth/RegisterEmail'
+import LoginEmail from './components/auth/LoginEmail'
 import RoutineFeed from './components/RoutineFeed'
 import Routine from './components/Routine';
 import NewRoutine from './components/NewRoutine';
@@ -29,6 +30,10 @@ const App = () => {
         <Stack.Screen 
           name='RegisterEmail'
           component={RegisterEmail}
+        />
+        <Stack.Screen 
+          name='LoginEmail'
+          component={LoginEmail}
         />
         <Stack.Screen 
           name='RoutineFeed'

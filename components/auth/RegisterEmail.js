@@ -36,6 +36,9 @@ function RegisterEmail({ navigation }) {
             <TouchableOpacity style={styles.emailButton} onPress={onSubmit}>
                 <Text>Submit</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={{ marginTop: 20 }} onPress={() => navigation.navigate("LoginEmail")} >
+                <Text>Login</Text>
+            </TouchableOpacity>
         </View>
     )
 }
