@@ -20,18 +20,25 @@ function RoutineFeed(props) {
   const [date, setDate] = useState();
 
   useEffect(() => {
-    firestore()
-      .collection('users1')
-      .doc('initial')
-      .collection('created-routines')
-      .get()
-      .then((querySnapshot) => {
-        let r = [];
-        querySnapshot.forEach((doc) => {
-          r.push(doc.data());
+    const getUid = async () => {
+      const uid = await AsyncStorage.getItem('uid')
+
+      console.log(uid, 'uid')
+      await firestore()
+        .collection('users1')
+        .doc(uid)
+        .collection('created-routines')
+        .get()
+        .then((querySnapshot) => {
+          let r = [];
+          querySnapshot.forEach((doc) => {
+            r.push(doc.data());
+          });
+          setRoutines(r);
         });
-        setRoutines(r);
-      });
+        console.log(routines, 'rout')
+    }
+    getUid()
   }, []);
 
   useEffect(() => {

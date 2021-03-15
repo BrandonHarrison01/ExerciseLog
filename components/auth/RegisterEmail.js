@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, Text, Alert, StyleSheet, TextInput } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
@@ -21,7 +22,8 @@ function RegisterEmail({ navigation }) {
         if(passwordA === passwordB){
             try {
                 const cred = await auth().createUserWithEmailAndPassword(email, passwordA)
-                const res = await firestore().collection('users1').doc(cred.user.uid).collection('stats').doc('lifetimeTotal').set(userConfig)
+                await firestore().collection('users1').doc(cred.user.uid).collection('stats').doc('lifetime-total').set(userConfig)
+                await AsyncStorage.setItem('uid', `${cred.user.uid}`)
                 navigation.navigate('RoutineFeed')
             } catch(err) {
                 console.log(err, 'error')
