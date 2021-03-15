@@ -10,18 +10,22 @@ function RegisterEmail({ navigation }) {
     const [passwordB, setPasswordB] = useState('')
     const [passwordMatch, setPasswordMatch] = useState(true)
 
+    const userConfig = {
+        dayStreak: 0,
+        daysLogged: {},
+        longestStreak: 0,
+        totalWeight: 0
+    }
+
     const onSubmit = async () => {
         if(passwordA === passwordB){
             try {
                 const cred = await auth().createUserWithEmailAndPassword(email, passwordA)
-                const res = firestore().collection('users1').doc(cred.user.uid).set({empty: 'object'})
-                console.log(res, 'res')
+                const res = await firestore().collection('users1').doc(cred.user.uid).collection('stats').doc('lifetimeTotal').set(userConfig)
+                navigation.navigate('RoutineFeed')
             } catch(err) {
                 console.log(err, 'error')
             }
-            // if(res){
-            //     navigation.navigate('RoutineFeed')
-            // }
         } else {
             setPasswordMatch(false)
         }
